@@ -1,2 +1,2 @@
-# How-s-the-weather-app
+# Hows-the-weather-app
 A simple weather application

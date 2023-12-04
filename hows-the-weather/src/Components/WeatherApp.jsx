@@ -7,6 +7,9 @@ const WeatherApp = () => {
     "https://openweathermap.org/img/wn/02d@2x.png"
   );
   const [weatherData, setWeatherData] = useState(null);
+  const [error, setError] = useState(false);
+  const [loader, setLoader] = useState(false);
+  let timeIntervalId;
 
   const updateLiveTime = (timestamp) => {
     const time = new Date(timestamp);
@@ -19,22 +22,30 @@ const WeatherApp = () => {
   };
 
   const getWeatherData = async () => {
+    setLoader(true);
     const cityName = document.getElementsByClassName("place-input")[0].value;
     const API_KEY = "1077a87a4edcc4df0c0e7ca012bf62ac";
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=metric`;
     const fetchResponse = await fetch(url);
-    const data = await fetchResponse.json();
-
-    if (data) {
-      setWeatherData((prevData) => data);
+    console.log(fetchResponse);
+    if (fetchResponse.status === 200) {
+      setLoader(false);
+      const data = await fetchResponse.json();
+      setWeatherData(data);
       const iconUrl = `https://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png`;
-      setWeatherIcon((prevurl) => iconUrl);
+      setWeatherIcon(iconUrl);
 
       let timestamp = data.dt * 1000 + data.timezone * 1000;
-      setInterval(function () {
+      clearInterval(timeIntervalId);
+      timeIntervalId = setInterval(function () {
         timestamp += 1000;
         updateLiveTime(timestamp);
       }, 1000);
+    } else {
+      setError(true);
+      setTimeout(function () {
+        setError(false);
+      }, 8000);
     }
   };
   return (
@@ -56,7 +67,11 @@ const WeatherApp = () => {
         <div className="search-container">
           <input className="place-input" placeholder="Enter city name"></input>
           <button onClick={getWeatherData} className="submit-btn">
-            <img src={searchIcon} height={"30px"} />
+            {loader ? (
+              <span className="loader"></span>
+            ) : (
+              <img src={searchIcon} height={"30px"} />
+            )}
           </button>
         </div>
         <div className={`search-results ${weatherData ? "inner-data" : ""}`}>
@@ -91,6 +106,12 @@ const WeatherApp = () => {
           <p className="livetime">00:00:00</p>
         </div>
       )}
+      <div className={`error-container ${error ? "show-error" : ""}`}>
+        <p>
+          Oops! Looks like the city you entered is not available. Please check
+          the spelling of the city you entered is correct.
+        </p>
+      </div>
     </>
   );
 };

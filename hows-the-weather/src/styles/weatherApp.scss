@@ -54,9 +54,13 @@
             border-color: transparent;
             box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
             text-align: center;
+            outline: 2px transparent;
         }
 
         .submit-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 0.5rem;
             height: 4rem;
             width: 4rem;
@@ -95,10 +99,6 @@
     .search-results:not(.inner-data) {
         color: #000;
     }
-
-    .inner-data {
-        // bottom: 2rem;
-    }
 }
 
 .data-received {
@@ -127,10 +127,66 @@
     }
 }
 
+.error-container {
+    position: absolute;
+    top: -20%;
+    left: 3%;
+    background-color: rgb(224, 80, 80);
+    border-radius: 1rem;
+    width: 40%;
+    padding: 1rem;
+    text-align: center;
+}
+
+.show-error {
+    animation: showCard 6s forwards ease-in-out;
+}
+
+@keyframes showCard {
+    0% {
+        top: -20%;
+    }
+
+    20% {
+        top: 5%;
+    }
+
+    80% {
+        top: 5%;
+    }
+
+    100% {
+        top: -20%;
+    }
+}
+
 @keyframes timeShow {
     0% {
         bottom: -20%;
-    } 100% {
+    }
+
+    100% {
         bottom: 1%
+    }
+}
+
+.loader {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: inline-block;
+    border-top: 3px solid #31304D;
+    border-right: 3px solid transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
     }
 }

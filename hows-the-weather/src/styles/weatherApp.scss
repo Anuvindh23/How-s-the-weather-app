@@ -93,6 +93,16 @@
                 margin: 0;
                 text-align: center;
             }
+
+            .info-container {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+
+                img {
+                    margin-right: 0.3rem;
+                }
+            }
         }
     }
 
@@ -124,6 +134,13 @@
         font-size: 5rem;
         font-weight: 300;
         color: #fff;
+    }
+
+    .day {
+        font-size: 1.5rem;
+        margin: 0;
+        position: relative;
+        top: 1.5rem;
     }
 }
 

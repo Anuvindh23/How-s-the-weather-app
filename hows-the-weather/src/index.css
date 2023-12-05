@@ -39,6 +39,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  transition: all 0.5s ease-in-out;
 }
 
 h1 {

@@ -1,23 +1,39 @@
+.weather-image-container {
+    position: fixed;
+    top: 0;
+    left: 100%;
+    height: 100%;
+    width: 100%;
+    animation: slideImage 1s forwards ease;
+
+    img {
+        height: 100%;
+        width: 100%;
+        display: block;
+    }
+}
+
 .card-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 38vh;
+    width: 30vw;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     background-color: #B6BBC4;
-    height: 35vh;
-    width: 25vw;
-    position: absolute;
-    top: 50%;
-    left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 2rem;
-    padding: 1rem;
+    padding: 2rem;
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
     transition: all 1s ease;
     color: transparent;
 
     .weather-img-container {
         display: flex;
+        flex-direction: column;
         justify-content: center;
     }
 
@@ -119,16 +135,18 @@
     transform: none;
     border-radius: 0;
     color: #000;
+    opacity: 80%;
 }
 
 .time-container {
     position: absolute;
-    left: 3%;
+    left: 1%;
     bottom: -20%;
-    animation-name: timeShow;
-    animation-duration: 1s;
-    animation-timing-function: ease;
-    animation-fill-mode: forwards;
+    animation: timeShow 1s forwards ease;
+    -webkit-text-stroke: 0.05rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 1rem 2rem;
+    border-radius: 1rem;
 
     p {
         font-size: 5rem;
@@ -141,6 +159,10 @@
         margin: 0;
         position: relative;
         top: 1.5rem;
+    }
+
+    .livetime {
+        margin: 0;
     }
 }
 
@@ -157,6 +179,58 @@
 
 .show-error {
     animation: showCard 6s forwards ease-in-out;
+}
+
+.initial-info-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: absolute;
+    top: -20%;
+    left: 2%;
+    background-color: #B6BBC4;
+    border-radius: 1rem;
+    width: auto;
+    padding: 1rem;
+
+    p {
+        margin: 0;
+    }
+}
+
+.show-info {
+    animation: showInfo 0.5s forwards ease-in-out;
+}
+
+.hide-info {
+    animation: showInfo 0.5s backwards ease-in-out;
+}
+
+.loader {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: inline-block;
+    border-top: 3px solid #31304D;
+    border-right: 3px solid transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes slideImage {
+    0% {
+        right: 100%;
+    } 100% {
+        left: 0;
+    }
+}
+
+@keyframes showInfo {
+    0% {
+        top: -20%;
+    } 100% {
+        top: 5%;
+    }
 }
 
 @keyframes showCard {
@@ -185,17 +259,6 @@
     100% {
         bottom: 1%
     }
-}
-
-.loader {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    display: inline-block;
-    border-top: 3px solid #31304D;
-    border-right: 3px solid transparent;
-    box-sizing: border-box;
-    animation: rotation 1s linear infinite;
 }
 
 @keyframes rotation {

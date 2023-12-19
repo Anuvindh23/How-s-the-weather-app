@@ -1,27 +1,25 @@
-
-  @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200;400;500&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,100;1,200;1,300;1,400;1,500;1,600&display=swap');
 
 
 body {
-  font-family: 'Kanit', sans-serif;
-  font-weight: 900;
-  background-color: #A9C9FF;
-  background-image: linear-gradient(180deg, #161A30 0%, #31304D 100%);
-
+  font-family: 'Josefin Sans', sans-serif;
+  background-color: #28282B;
 }
 
 :root {
   line-height: 1.5;
-
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  min-width: 100vw;
 }
 
 a {
@@ -31,6 +29,11 @@ a {
 }
 a:hover {
   color: #535bf2;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  color: #fff;
 }
 
 body {

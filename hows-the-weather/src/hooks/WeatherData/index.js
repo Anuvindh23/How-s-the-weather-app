@@ -1,8 +1,7 @@
 const useWeatherData = () => {
-  const API_KEY = "1077a87a4edcc4df0c0e7ca012bf62ac";
 
   const getInitialWeatherData = async (lat, lon) => {
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,rain,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&timeformat=unixtime&timezone=auto`;
     const fetchResponse = await fetch(url);
     if (fetchResponse.status === 200) {
         const data = await fetchResponse.json();
@@ -13,7 +12,7 @@ const useWeatherData = () => {
   };
 
   const getSpecificWeatherData = async (cityName) => {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=metric`;
+    // const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=metric`;
     const fetchResponse = await fetch(url);
 
     if (fetchResponse.status === 200) {

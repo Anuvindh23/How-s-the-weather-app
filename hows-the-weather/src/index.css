@@ -4,12 +4,12 @@
 body {
   font-family: 'Josefin Sans', sans-serif;
   background-color: #28282B;
+  color: rgba(255, 255, 255, 0.87);
 }
 
 :root {
   line-height: 1.5;
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -18,8 +18,9 @@ body {
 }
 
 #root {
-  min-height: 100vh;
-  min-width: 100vw;
+  height: 100%;
+  width: 100%;
+  position: absolute;
 }
 
 a {

@@ -1,32 +1,72 @@
+import { useState } from "react";
+
 const useWeatherData = () => {
-
-  const getInitialWeatherData = async (lat, lon) => {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,rain,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&timeformat=unixtime&timezone=auto`;
-    const fetchResponse = await fetch(url);
-    if (fetchResponse.status === 200) {
-        const data = await fetchResponse.json();
-        return data;
-    } else {
-        console.log("Geolocation not supported by this browser.");
+  const [weatherData, setWeatherData] = useState({
+    locationName: false,
+    currentWeatherData: {
+      status: false,
+      timestamp: false,
+      humidity: false,
+      temperature: false,
+      windSpeed: false,
+      weatherIcon: false,
+      weatherMain: false,
+      weatherDescription: false,
+    },
+    dailyWeatherData: {
+      status: false,
+      dailyData: false,
+      dailyUnits: false,
     }
-  };
+  });
 
-  const getSpecificWeatherData = async (cityName) => {
-    // const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=metric`;
-    const fetchResponse = await fetch(url);
-
-    if (fetchResponse.status === 200) {
-      const data = await fetchResponse.json();
-      return data;
+  const getWeatherData = async (lat, lon) => {
+    const currentWeatherDataUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=1077a87a4edcc4df0c0e7ca012bf62ac`;
+    const cwdResponse = await fetch(currentWeatherDataUrl);
+    if (cwdResponse.status === 200) {
+        const data = await cwdResponse.json();
+        setWeatherData((prevObj) => ({
+          ...prevObj,
+          locationName: data.name,
+          currentWeatherData: {
+            status: 'success',
+            timestamp: data.dt * 1000,
+            humidity: data.main.humidity,
+            mainTemperature: data.main.temp,
+            minTemp: data.main.temp_min,
+            maxTemp: data.main.temp_max,
+            windSpeed: data.wind.speed,
+            weatherIcon: data.weather[0].icon,
+            weatherMain: data.weather[0].main,
+            weatherDescription: data.weather[0].description,
+            pressure: data.main.pressure,
+          },
+        }));
     } else {
-      throw new Error("error");
+        console.log("Something wrong happened while getting the current weather data from server! 🥲");
     }
-  };
 
+    const dailyWeatherDataUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min`;
+    const dwdResponse = await fetch(dailyWeatherDataUrl);
+    if (dwdResponse.status === 200) {
+      const data = await dwdResponse.json();
+      setWeatherData((prevObj) => ({
+        ...prevObj,
+        dailyWeatherData: {
+          status: 'success',
+          dailyData:data.daily,
+          dailyUnits:data.daily_units,
+        }
+      }))
+    } else {
+      console.log('Something wrong happened while getting the daily weather data from the server! 😢')
+    }
+  }
   return {
+    state: weatherData,
+    setState: setWeatherData,
     static: {
-      getInitialWeatherData,
-      getSpecificWeatherData,
+      getWeatherData,
     },
   };
 };

@@ -6,7 +6,7 @@ const InitialLoadingScreen = () => {
         <p className="load-info">
           Please wait until we find your Geolocation for Weather Updates.
         </p>
-        <span className="loader mx-auto d-block"></span>
+        <span className="loader mx-auto mt-3 d-block"></span>
       </div>
     </div>
   );

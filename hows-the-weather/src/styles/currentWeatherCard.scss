@@ -1,29 +1,87 @@
 .current-weather-container {
+    position: relative;
+    max-width: 55%;
     border-radius: 1rem;
-    border: 2px solid #fff;
     padding: 1rem;
     text-align: center;
+    background: transparent;
     .temperature-container {
+        max-width: 35%;
+        z-index: 1;
         .temp-content {
             height: 100%;
-            font-size: 3rem;
+            font-size: 4rem;
         }
     }
     .details-container {
+        z-index: 1;
         .desc-container {
             .desc-name {
                 font-size: 2rem;
+                span {
+                    font-size: 1rem;
+                    margin-left: 0.3rem;
+                }
             }
         }
     }
     .details-content {
+        z-index: 1;
         .details {
             .title {
                 .title-name {
                     font-size: 1rem;
                     font-weight: 900;
+                    text-wrap: nowrap;
                 }
             }
+        }
+    }
+}
+
+.current-weather-backdrop {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #373737;
+    z-index: 0;
+    border-radius: 1rem;
+    opacity: 60%;
+    filter: blur(1px);
+}
+
+.date-time-container {
+    max-width: 25%;
+    position: absolute;
+    bottom: 5%;
+    padding: 1rem;
+    transition: all 0.5s ease-in;
+    .date-time-backdrop {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: 100%;
+        background-color: #373737;
+        z-index: 0;
+        border-radius: 1rem;
+        opacity: 60%;
+        filter: blur(1px);
+    }
+    .date-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        z-index: 1;
+    }
+    .time-container {
+        position: relative;
+        min-width: 23%;
+        z-index: 1;
+        .time-content {
+            font-size: 5rem;
         }
     }
 }

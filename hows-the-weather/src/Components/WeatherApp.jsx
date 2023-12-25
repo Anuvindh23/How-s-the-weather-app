@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useWeatherData from "../hooks/WeatherData";
 import InitialLoadingScreen from "./InitialLoadingScreen";
 import CurrentWeatherCard from "./CurrentWeatherCard";
@@ -6,46 +6,52 @@ import DailyWeatherCard from "./DailyWeatherCard";
 import "../styles/weatherApp.scss";
 
 const WeatherApp = () => {
-  const [weatherData, setWeatherData] = useState(null);
+  const isPageMounted = useRef(true);
   const [positionRetrieved, setPositionRetrieved] = useState(false);
 
   const {
-    static: { getInitialWeatherData },
+    state: weatherData,
+    static: { getWeatherData },
   } = useWeatherData();
 
-  setTimeout(() => {
-    if ("geolocation" in navigator && !positionRetrieved) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-        getInitialWeatherData(lat, lon)
-          .then((res) => {
-            setWeatherData(res);
-          })
-          .catch((err) => {
-            console.log(err);
+  useEffect(() => {
+    if(isPageMounted) {
+      const fetchInitialLocationWeatherData = () => {
+        if ("geolocation" in navigator && !positionRetrieved) {
+          navigator.geolocation.getCurrentPosition(async (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            await getWeatherData(lat, lon);
           });
-      });
+        }
+        setPositionRetrieved(true);
+      };
+
+      setTimeout(fetchInitialLocationWeatherData, 7000);
     }
-    setPositionRetrieved(true);
-  }, 7000);
+
+    return () => {
+      isPageMounted.current = false;
+    }
+  }, []);
 
   return (
     <>
-      {!weatherData ? (
-        <InitialLoadingScreen />
-      ) : (
-        <>
-          <CurrentWeatherCard
-            data={weatherData.current}
-            units={weatherData.current_units}
-          />
-          <DailyWeatherCard
-            data={weatherData.daily}
-            units={weatherData.daily_units}
-          />
-        </>
-      )}
+      {
+        (weatherData.dailyWeatherData.status === 'success') ? (
+          <>
+            <CurrentWeatherCard
+              data={weatherData.currentWeatherData}
+            />
+            <DailyWeatherCard
+              data={weatherData.dailyWeatherData}
+            />
+          </>
+        ) : (
+          <InitialLoadingScreen/>
+        )
+      }
     </>
   );
 };

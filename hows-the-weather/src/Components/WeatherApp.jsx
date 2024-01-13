@@ -18,7 +18,6 @@ const WeatherApp = () => {
 
   const stopTimeInterval = () => {
     clearInterval(timeIntervalId);
-    console.log(timeIntervalId, 'in func');
   }
 
   const updateLiveTime = (timestamp) => {

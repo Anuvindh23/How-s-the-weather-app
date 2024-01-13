@@ -4,6 +4,8 @@ import InitialLoadingScreen from "./InitialLoadingScreen";
 import CurrentWeatherCard from "./CurrentWeatherCard";
 import DailyWeatherCard from "./DailyWeatherCard";
 import "../styles/weatherApp.scss";
+import LandingModal from "./LandingModal";
+// import { indexDBOperation } from "../Functions/indexedDBfunctions";
 
 const WeatherApp = () => {
   const isPageMounted = useRef(true);
@@ -13,6 +15,29 @@ const WeatherApp = () => {
     state: weatherData,
     static: { getWeatherData },
   } = useWeatherData();
+
+  // const handleIndexDB = async () => {
+  //   const versionNumber = 1;
+  //   let currentVersion;
+  //   indexDBOperation('sampleDB', 'objStore1', 'id', versionNumber).then(async (res) => {
+  //     res.IDBstoreData({
+  //       id: 23,
+  //       data: 'anuvindh',
+  //     });
+  //     currentVersion = await res.getVersion();
+  //     if(versionNumber === currentVersion) {
+  //       const newVersion = currentVersion + 1;
+  //       indexDBOperation('sampleDB', 'objStore2', 'virtualId', newVersion).then((resp) => {
+  //         resp.IDBstoreData({
+  //           virtualId: 34,
+  //           data: 'anu',
+  //         });
+  //       })
+  //     }
+  //   })
+  // }
+
+  // handleIndexDB();
 
   useEffect(() => {
     if(isPageMounted) {
@@ -28,7 +53,7 @@ const WeatherApp = () => {
         setPositionRetrieved(true);
       };
 
-      setTimeout(fetchInitialLocationWeatherData, 7000);
+      setTimeout(fetchInitialLocationWeatherData, 1000);
     }
 
     return () => {
@@ -38,7 +63,7 @@ const WeatherApp = () => {
 
   return (
     <>
-      {
+      {/* {
         (weatherData.dailyWeatherData.status === 'success') ? (
           <>
             <CurrentWeatherCard
@@ -51,7 +76,8 @@ const WeatherApp = () => {
         ) : (
           <InitialLoadingScreen/>
         )
-      }
+      } */}
+      <LandingModal/>
     </>
   );
 };

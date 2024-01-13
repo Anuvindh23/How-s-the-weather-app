@@ -1,7 +1,7 @@
 import "../styles/currentWeatherCard.scss";
 import $ from  'jquery';
 import TimeAndDateComponent from "./TimeAndDateComponent";
-import minTempIcon from '../assets/minTemp_icon.svg';
+// import minTempIcon from '../assets/minTemp_icon.svg';
 import mistImage from "../assets/mist_smoke_haze_fog.jpg";
 import smokeImage from "../assets/mist_smoke_haze_fog.jpg";
 import hazeImage from "../assets/mist_smoke_haze_fog.jpg";

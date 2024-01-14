@@ -1,17 +1,32 @@
+.weather-image-container {
+    position: fixed;
+    top: 0;
+    left: 100%;
+    height: 100%;
+    width: 100%;
+    animation: slideImage 1s forwards ease;
+
+    img {
+        height: 100%;
+        width: 100%;
+        display: block;
+    }
+}
+
 .card-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #B6BBC4;
-    height: 35vh;
-    width: 25vw;
     position: absolute;
     top: 50%;
     left: 50%;
+    height: 18rem;
+    width: 30rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #B6BBC4;
     transform: translate(-50%, -50%);
     border-radius: 2rem;
-    padding: 1rem;
+    padding: 2rem;
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
     transition: all 1s ease;
     color: transparent;
@@ -19,25 +34,17 @@
     .weather-img-container {
         display: flex;
         justify-content: center;
-    }
-
-    .info-loader-container {
-        text-align: center;
-
-        .main-container {
-            font-size: 1.5rem;
-            font-weight: 900;
-
-            p {
-                margin: 0;
-            }
+        flex-wrap: wrap;
+        img {
+            width: 50%;
         }
-
+        .main-container {
+            width: 50%;
+            align-self: center;
+        }
         .desc-container {
-            p {
-                font-size: 1rem;
-                font-weight: 400;
-            }
+            width: 100%;
+            justify-self: center;
         }
     }
 
@@ -45,8 +52,11 @@
         display: flex;
         gap: 1rem;
         justify-content: space-evenly;
+        align-items: center;
+        flex-grow: 1;
 
         .place-input {
+            height: 3rem;
             color: #000;
             background-color: #F0ECE5;
             border-radius: 2rem;
@@ -55,6 +65,7 @@
             box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
             text-align: center;
             outline: 2px transparent;
+            flex-grow: 1;
         }
 
         .submit-btn {
@@ -111,24 +122,57 @@
     }
 }
 
+.today-weather-main-desc-container {
+    height: fit-content;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    position: absolute;
+    top: 130%;
+    left: 25%;
+    transform: translate(-25%, -50%);
+    padding: 2rem;
+    border-radius: 1rem;
+    animation: todayWeatherAnimate 1s ease-in-out forwards;
+
+    .img-main-container {
+        font-size: 1.5rem;
+        font-weight: 900;
+
+        .img-container {
+            background-color: #97bcd7;
+            border-radius: 50%;
+            scale: 0.6;
+            // border: 0.5rem solid #000;
+        }
+    }
+
+    h4, h5{
+        color: #fff;
+    }
+}
+
 .data-received {
-    height: 100vh;
-    width: 50vw;
+    height: 100%;
+    width: 50%;
     top: 0;
     right: 0;
     transform: none;
     border-radius: 0;
     color: #000;
+    opacity: 80%;
 }
 
 .time-container {
     position: absolute;
-    left: 3%;
+    left: 1%;
     bottom: -20%;
-    animation-name: timeShow;
-    animation-duration: 1s;
-    animation-timing-function: ease;
-    animation-fill-mode: forwards;
+    animation: timeShow 1s forwards ease;
+    -webkit-text-stroke: 0.05rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0 2rem;
+    border-radius: 1rem;
+    min-width: 21.5rem;
 
     p {
         font-size: 5rem;
@@ -142,6 +186,10 @@
         position: relative;
         top: 1.5rem;
     }
+
+    .livetime {
+        margin: 0;
+    }
 }
 
 .error-container {
@@ -153,38 +201,37 @@
     width: 40%;
     padding: 1rem;
     text-align: center;
+    display: none;
 }
 
 .show-error {
     animation: showCard 6s forwards ease-in-out;
 }
 
-@keyframes showCard {
-    0% {
-        top: -20%;
-    }
+.initial-info-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: absolute;
+    top: 5%;
+    left: 2%;
+    transform: translate(0, -150%);
+    background-color: #B6BBC4;
+    border-radius: 1rem;
+    width: fit-content;
+    padding: 1rem;
 
-    20% {
-        top: 5%;
-    }
-
-    80% {
-        top: 5%;
-    }
-
-    100% {
-        top: -20%;
+    p {
+        margin: 0;
     }
 }
 
-@keyframes timeShow {
-    0% {
-        bottom: -20%;
-    }
+.show-info {
+    animation: showInfo 0.5s forwards ease-in-out;
+}
 
-    100% {
-        bottom: 1%
-    }
+.hide-info {
+    animation: hideInfo 0.5s forwards ease-in-out;
 }
 
 .loader {
@@ -198,6 +245,60 @@
     animation: rotation 1s linear infinite;
 }
 
+@keyframes slideImage {
+    0% {
+        right: 100%;
+    } 100% {
+        left: 0;
+    }
+}
+
+@keyframes showInfo {
+    0% {
+        transform: translate(0, -200%);
+    } 100% {
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes hideInfo {
+    0% {
+        transform: translate(0, 0);
+    } 100% {
+        transform: translate(0, -200%);
+    }
+}
+
+@keyframes showCard {
+    0% {
+        top: -20%;
+        display: block;
+    }
+
+    20% {
+        top: 5%;
+    }
+
+    80% {
+        top: 5%;
+    }
+
+    100% {
+        top: -20%;
+        display: none;
+    }
+}
+
+@keyframes timeShow {
+    0% {
+        bottom: -20%;
+    }
+
+    100% {
+        bottom: 1%
+    }
+}
+
 @keyframes rotation {
     0% {
         transform: rotate(0deg);
@@ -205,5 +306,13 @@
 
     100% {
         transform: rotate(360deg);
+    }
+}
+
+@keyframes todayWeatherAnimate {
+    0% {
+        top: 130%;
+    } 100% {
+        top: 50%;
     }
 }

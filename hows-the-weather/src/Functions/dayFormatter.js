@@ -1,13 +1,16 @@
 const dayFormatter = (timeStamp) => {
+    const time = new Date(timeStamp);
+    let hours = time.getUTCHours();
+    let minutes = time.getUTCMinutes();
+    let seconds = time.getUTCSeconds();
 
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-    const d = new Date(timeStamp);
-    const date = d.getDate();
-    const day = days[d.getDay()];
-    const month = months[d.getMonth()];
-    const year = d.getFullYear();
+    const date = time.getDate();
+    const day = days[time.getDay()];
+    const month = months[time.getMonth()];
+    const year = time.getFullYear();
 
     let lastDig = date.toString().split('').at(-1);
     lastDig = Number(lastDig);
@@ -22,9 +25,19 @@ const dayFormatter = (timeStamp) => {
         dateJoin = 'th';
     }
 
-    const formattedTime = `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+    // const liveTimeEl = document.getElementsByClassName("livetime");
+    // const dayEl = document.getElementsByClassName('day');
+    // liveTimeEl[0].innerHTML = hours + ":" + minutes + ":" + seconds;
+    // dayEl[0].innerHTML = `${day}, ${date}${dateJoin} ${month} ${year}`;
+
+    const formattedTime =  hours + ":" + minutes + ":" + seconds;
     const formattedDate = `${day}, ${date}${dateJoin} ${month} ${year}`;
-    return { formattedDate, formattedTime };
+    const obj = {
+        formattedTime,
+        formattedDate,
+    };
+    console.log(obj);
+    return obj;
 }
 
 export default dayFormatter;

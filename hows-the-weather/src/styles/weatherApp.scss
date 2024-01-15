@@ -1,10 +1,15 @@
+body {
+    overflow: hidden;
+}
+
 .weather-image-container {
     position: fixed;
     top: 0;
     left: 100%;
     height: 100%;
     width: 100%;
-    animation: slideImage 1s forwards ease;
+    animation: slideImage 0.5s forwards ease;
+    animation-delay: 0.5s;
 
     img {
         height: 100%;
@@ -22,61 +27,69 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    background-color: #B6BBC4;
+    justify-content: space-evenly;
+    background-color: #d5dbe6;
     transform: translate(-50%, -50%);
     border-radius: 2rem;
     padding: 2rem;
-    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
-    transition: all 1s ease;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+    transition: all 0.5s ease;
     color: transparent;
 
-    .weather-img-container {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        img {
-            width: 50%;
-        }
-        .main-container {
-            width: 50%;
-            align-self: center;
-        }
-        .desc-container {
-            width: 100%;
-            justify-self: center;
-        }
-    }
-
-    .search-container {
-        display: flex;
-        gap: 1rem;
-        justify-content: space-evenly;
-        align-items: center;
-        flex-grow: 1;
-
-        .place-input {
-            height: 3rem;
-            color: #000;
-            background-color: #F0ECE5;
-            border-radius: 2rem;
-            padding: 0 1rem;
-            border-color: transparent;
-            box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
-            text-align: center;
-            outline: 2px transparent;
-            flex-grow: 1;
-        }
-
-        .submit-btn {
+    .search-img-container {
+        flex-direction: column;
+        transition: all 1s ease-in-out;
+        .weather-img-container {
             display: flex;
-            align-items: center;
             justify-content: center;
-            padding: 0.5rem;
-            height: 4rem;
-            width: 4rem;
-            border-radius: 50%;
-            background-color: #F0ECE5;
+            flex-wrap: wrap;
+            img {
+                width: 50%;
+            }
+            .main-container {
+                width: 50%;
+                align-self: center;
+            }
+            .desc-container {
+                width: 100%;
+                justify-self: center;
+            }
+        }
+    
+        .search-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-evenly;
+            align-items: center;
+            flex-grow: 1;
+    
+            .place-input {
+                height: 3rem;
+                color: #000;
+                background-color: #F0ECE5;
+                border-radius: 2rem;
+                padding: 0 1rem;
+                border-color: transparent;
+                box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+                text-align: center;
+                outline: 2px transparent;
+                flex-grow: 1;
+            }
+    
+            .submit-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0.5rem;
+                height: 4rem;
+                width: 4rem;
+                border-radius: 50%;
+                background-color: #F0ECE5;
+            }
+        }
+
+        &.flex {
+            flex-direction: row;
         }
     }
 
@@ -88,8 +101,8 @@
         margin: 1rem;
         margin-top: 1.5rem;
         width: 75%;
-        transition: all 0.5s ease;
         text-align: center;
+        opacity: 0;
 
         .data-field {
             width: 100%;
@@ -117,8 +130,41 @@
         }
     }
 
+    .inner-data {
+        animation: animateSR 0.5s ease-in-out forwards;
+        animation-delay: 1s;
+    }
+
     .search-results:not(.inner-data) {
         color: #000;
+    }
+
+    .data-grid {
+        display: grid;
+        grid-template: auto auto / auto auto auto auto;
+        gap: 2rem;
+        text-align: center;
+        background-color: #f0ece5 80%;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+        scale: 0.9;
+        background-color: #8f939b;
+        transform: translateY(200%);
+        animation: animateGrid 0.5s ease-in-out forwards;
+        animation-delay: 1.8s;
+
+        .daily-data-cell {
+            padding: 0.5rem;
+            border-radius: 1rem;
+            box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+
+            .temp-container {
+                padding: 0 1rem;
+                display: flex;
+                gap: 1rem;
+            }
+        }
     }
 }
 
@@ -128,22 +174,29 @@
     background-color: rgba(0, 0, 0, 0.5);
     color: #fff;
     position: absolute;
-    top: 130%;
-    left: 25%;
-    transform: translate(-25%, -50%);
-    padding: 2rem;
+    top: -50%;
+    left: 1%;
+    padding: 0 2rem 0 1rem;
     border-radius: 1rem;
-    animation: todayWeatherAnimate 1s ease-in-out forwards;
+    animation: todayWeatherAnimate 0.5s ease-in-out forwards;
+    animation-delay: 2.3s;
 
     .img-main-container {
         font-size: 1.5rem;
         font-weight: 900;
+        display: flex;
+        align-items: center;
+
+        p {
+            font-weight: 400;
+            color: #fff;
+            font-size: smaller;
+        }
 
         .img-container {
             background-color: #97bcd7;
             border-radius: 50%;
             scale: 0.6;
-            // border: 0.5rem solid #000;
         }
     }
 
@@ -160,14 +213,14 @@
     transform: none;
     border-radius: 0;
     color: #000;
-    opacity: 80%;
 }
 
 .time-container {
     position: absolute;
     left: 1%;
     bottom: -20%;
-    animation: timeShow 1s forwards ease;
+    animation: timeShow 0.5s forwards ease;
+    animation-delay: 2.5s;
     -webkit-text-stroke: 0.05rem;
     background-color: rgba(0, 0, 0, 0.5);
     padding: 0 2rem;
@@ -194,14 +247,15 @@
 
 .error-container {
     position: absolute;
-    top: -20%;
-    left: 3%;
-    background-color: rgb(224, 80, 80);
+    top: -50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f7b4bb;
     border-radius: 1rem;
     width: 40%;
     padding: 1rem;
     text-align: center;
-    display: none;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
 }
 
 .show-error {
@@ -216,7 +270,7 @@
     top: 5%;
     left: 2%;
     transform: translate(0, -150%);
-    background-color: #B6BBC4;
+    background-color: #d5dbe6;
     border-radius: 1rem;
     width: fit-content;
     padding: 1rem;
@@ -231,7 +285,7 @@
 }
 
 .hide-info {
-    animation: hideInfo 0.5s forwards ease-in-out;
+    animation: hideInfo 0.3s forwards ease-in-out;
 }
 
 .loader {
@@ -244,6 +298,21 @@
     box-sizing: border-box;
     animation: rotation 1s linear infinite;
 }
+
+.daily-text {
+    opacity: 0;
+    animation: animateText 0.3s ease-in forwards;
+    animation-delay: 1.5s;
+}
+
+@keyframes animateText {
+    0% {
+        opacity: 0;
+    } 100% {
+        opacity: 1;
+    }
+}
+
 
 @keyframes slideImage {
     0% {
@@ -271,21 +340,19 @@
 
 @keyframes showCard {
     0% {
-        top: -20%;
-        display: block;
+        top: -50%;
     }
 
     20% {
-        top: 5%;
+        top: 10%;
     }
 
     80% {
-        top: 5%;
+        top: 10%;
     }
 
     100% {
-        top: -20%;
-        display: none;
+        top: -50%;
     }
 }
 
@@ -311,8 +378,184 @@
 
 @keyframes todayWeatherAnimate {
     0% {
-        top: 130%;
+        top: -50%;
     } 100% {
-        top: 50%;
+        top: 2%;
+    }
+}
+
+@keyframes toggleFlex {
+    0% {
+        flex-direction: column;
+    } 100% {
+        flex-direction: row;
+    }
+}
+
+@keyframes animateSR {
+    0% {
+        opacity: 0;
+        transform: translate(100%, 0);
+    } 100% {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes animateGrid {
+    0% {
+        transform: translateY(200%);
+    } 100% {
+        transform: translateY(0);
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        overflow: scroll;
+    }
+    .weather-image-container {
+        z-index: -1;
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 100%;
+    }
+    .today-weather-main-desc-container {
+        position: static;
+        width: 100%;
+        border-radius: 0;
+        top: 0 !important;
+        z-index: 1;
+        left: 0;
+        background-color: #0d5579;
+        animation: none;
+
+        .img-main-container {
+            display: block;
+        }
+    }
+
+    .time-container {
+        position: fixed;
+        bottom: 0 !important;
+        left: 0;
+        background-color: #000;
+        border-radius: 0;
+        z-index: 1;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        animation: none;
+        -webkit-text-stroke: 0;
+        padding: 0 1rem;
+        min-width: unset;
+
+        .day {
+            max-width: 42%;
+            font-size: 1rem;
+            position: static;
+        }
+
+        .livetime {
+            min-width: 55%;
+            font-size: 2.5rem;
+            -webkit-text-stroke-width: 1;
+        }
+    }
+
+    .card-container {
+        height: fit-content;
+        border-radius: 0.5rem;
+        position: absolute;
+
+        &.data-received {
+            justify-content: flex-start;
+            position: static;
+            width: unset;
+            top: unset;
+            right: unset;
+            width: 90%;
+        }
+
+        .search-results {
+
+            .data-field {
+                align-items: center;
+                padding: 1rem 0;
+            }
+
+            &.inner-data {
+                width: 100%;
+            }
+        }
+
+        .search-img-container {
+            .search-container {
+                margin-top: 2rem;
+                .submit-btn {
+                    height: 3rem;
+                    width: 3rem;
+                }
+            }
+        }
+    }
+
+    .data-grid {
+        display: grid;
+        grid-template: auto / auto auto;
+        align-items: center;
+        padding: 1rem;
+        gap: 1rem;
+        border-radius: 0.5rem;
+        background-color: #d5dbe6;
+        margin-top: 1rem;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+
+        .daily-data-cell {
+            // border: 1px solid #fff;
+            border-radius: 0.5rem;
+            box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+            padding: 0.5rem;
+            background-color: #c5ccd7;
+
+            .img-date-container {
+                text-align: center;
+            }
+
+
+            .temp-container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                & > div {
+                    width: 50%;
+
+                    & > p {
+                        text-align: center;
+                    }
+                }
+
+                &:first-child {
+                    border-right: 2px solid #000;
+                }
+            }
+        }
+    }
+    .sample-div {
+        height: 5rem;
+        width: 100%;
+    }
+
+    .initial-info-container {
+        width: 95%;
+        left: 2%;
+        transform: translate(-50%, -150%);
+    }
+
+    .loader.info {
+        width: 50px;
     }
 }

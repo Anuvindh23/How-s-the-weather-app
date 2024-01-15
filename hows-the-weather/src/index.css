@@ -3,7 +3,9 @@
 
 body {
   font-family: 'Josefin Sans', sans-serif;
-  background-color: #28282B;
+  background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
   /* color: rgba(255, 255, 255, 0.87); */
   color: #000;
 }
@@ -11,7 +13,7 @@ body {
 :root {
   line-height: 1.5;
   color-scheme: light dark;
-  background-color: #242424;
+  background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -21,7 +23,6 @@ body {
 #root {
   height: 100%;
   width: 100%;
-  position: absolute;
 }
 
 a {

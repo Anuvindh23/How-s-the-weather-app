@@ -370,14 +370,6 @@ const WeatherApp = () => {
       {device === "mobile" && (
         <>
           {weatherData && (
-            <div className="weather-image-container">
-              <img
-                src={weatherStockImages[weatherData?.weather[0]?.main]}
-                alt="weather stock image"
-              />
-            </div>
-          )}
-          {weatherData && (
             <>
               <div className="time-container">
                 <p className="day"></p>

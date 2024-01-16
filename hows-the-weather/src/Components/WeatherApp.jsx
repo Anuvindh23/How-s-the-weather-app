@@ -537,17 +537,6 @@ const WeatherApp = () => {
           the spelling of the city you entered is correct.
         </p>
       </div>
-      <div
-        className={`initial-info-container ${
-          info ? "show-info" : weatherData ? "hide-info" : ""
-        }`}
-      >
-        <p>
-          Please wait until we find your Geo Location and provide weather
-          information.
-        </p>
-        <span className="loader info"></span>
-      </div>
     </>
   );
 };

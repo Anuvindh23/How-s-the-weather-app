@@ -34,8 +34,29 @@ const WeatherApp = () => {
     let minutes = time.getUTCMinutes();
     let seconds = time.getUTCSeconds();
 
-    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    const months = [ "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "August", "Sep", "Oct", "Nov", "Dec" ];
+    const days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "June",
+      "July",
+      "August",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
     let day = time.getUTCDay();
     let month = time.getUTCMonth();
     let date = time.getUTCDate();
@@ -76,15 +97,19 @@ const WeatherApp = () => {
           const dailyData = res.meteoData.daily.time.map((item, index) => {
             return {
               time: item,
-              maxTemp: Math.round(res.meteoData.daily.temperature_2m_max[index]),
-              minTemp: Math.round(res.meteoData.daily.temperature_2m_min[index]),
-            }
-          })
+              maxTemp: Math.round(
+                res.meteoData.daily.temperature_2m_max[index]
+              ),
+              minTemp: Math.round(
+                res.meteoData.daily.temperature_2m_min[index]
+              ),
+            };
+          });
           setdailyWeatherData(dailyData);
 
           let timestamp =
             res.weatherMapData.dt * 1000 + res.weatherMapData.timezone * 1000;
-            setTimestamp(timestamp);
+          setTimestamp(timestamp);
         })
         .catch((err) => console.log(err));
     });
@@ -107,7 +132,8 @@ const WeatherApp = () => {
         });
         setdailyWeatherData(dailyData);
 
-        let timestamp = res.weatherMapData.dt * 1000 + res.weatherMapData.timezone * 1000;
+        let timestamp =
+          res.weatherMapData.dt * 1000 + res.weatherMapData.timezone * 1000;
         setTimestamp(timestamp);
       })
       .catch(() => {
@@ -122,7 +148,7 @@ const WeatherApp = () => {
 
   useEffect(() => {
     let id;
-    if(timestamp) {
+    if (timestamp) {
       id = setInterval(() => {
         const temp = timestamp + 1000;
         setTimestamp(temp);
@@ -132,8 +158,8 @@ const WeatherApp = () => {
 
     return () => {
       clearInterval(id);
-    }
-  }, [timestamp])
+    };
+  }, [timestamp]);
 
   return (
     <>
@@ -438,9 +464,13 @@ const WeatherApp = () => {
                 <></>
               )}
             </div>
-            {
-          !weatherData ? <p className="text-center">Get your city&apos;s weather results here</p> : <></>
-        }
+            {!weatherData ? (
+              <p className="text-center">
+                Get your city&apos;s weather results here
+              </p>
+            ) : (
+              <></>
+            )}
           </div>
           {dailyWeatherData && (
             <div className="mt-3">
@@ -471,26 +501,24 @@ const WeatherApp = () => {
           )}
         </>
       )}
-      {
-        weatherData ? <div className="sample-div"></div> : <></>
-      }
+      {weatherData ? <div className="sample-div"></div> : <></>}
       <div className={`error-container ${error ? "show-error" : ""}`}>
-            <p>
-              Oops! Looks like the city you entered is not available. Please
-              check the spelling of the city you entered is correct.
-            </p>
-          </div>
-          <div
-            className={`initial-info-container ${
-              info ? "show-info" : weatherData ? "hide-info" : ""
-            }`}
-          >
-            <p>
-              Please wait until we find your Geo Location and provide weather
-              information.
-            </p>
-            <span className="loader info"></span>
-          </div>
+        <p>
+          Oops! Looks like the city you entered is not available. Please check
+          the spelling of the city you entered is correct.
+        </p>
+      </div>
+      <div
+        className={`initial-info-container ${
+          info ? "show-info" : weatherData ? "hide-info" : ""
+        }`}
+      >
+        <p>
+          Please wait until we find your Geo Location and provide weather
+          information.
+        </p>
+        <span className="loader info"></span>
+      </div>
     </>
   );
 };

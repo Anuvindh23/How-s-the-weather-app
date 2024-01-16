@@ -592,6 +592,7 @@ body {
         background-color: var(--card-color);
         margin-top: 1rem;
         box-shadow: var(--box-shadow-4);
+        animation: none;
 
         .daily-data-cell {
             border-radius: 0.5rem;

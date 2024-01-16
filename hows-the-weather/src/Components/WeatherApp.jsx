@@ -428,11 +428,11 @@ const WeatherApp = () => {
                   id="submit-btn"
                 >
                   {loader ? (
-                    <img src={searchIcon} height={"30px"} alt="search icon" />
-                  ) : (
                     <div className="submit-btn">
                       <span className="loader"></span>
                     </div>
+                  ) : (
+                    <img src={searchIcon} height={"30px"} alt="search icon" />
                   )}
                 </button>
               </div>

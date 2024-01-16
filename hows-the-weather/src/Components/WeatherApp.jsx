@@ -85,35 +85,43 @@ const WeatherApp = () => {
     }
   };
 
-  if ("geolocation" in navigator && !positionRetrieved) {
-    setInfo(true);
-    navigator.geolocation.getCurrentPosition((position) => {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-      getInitialWeatherData(lat, lon)
-        .then((res) => {
-          setInfo(false);
-          setWeatherData(res.weatherMapData);
-          const dailyData = res.meteoData.daily.time.map((item, index) => {
-            return {
-              time: item,
-              maxTemp: Math.round(
-                res.meteoData.daily.temperature_2m_max[index]
-              ),
-              minTemp: Math.round(
-                res.meteoData.daily.temperature_2m_min[index]
-              ),
-            };
-          });
-          setdailyWeatherData(dailyData);
+  if (device === "web") {
+    if ("geolocation" in navigator && !positionRetrieved) {
+      setInfo(true);
+      setLoader(true);
+      navigator.geolocation.getCurrentPosition((position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        getInitialWeatherData(lat, lon)
+          .then((res) => {
+            setLoader(false);
+            setInfo(false);
+            setWeatherData(res.weatherMapData);
+            const dailyData = res.meteoData.daily.time.map((item, index) => {
+              return {
+                time: item,
+                maxTemp: Math.round(
+                  res.meteoData.daily.temperature_2m_max[index]
+                ),
+                minTemp: Math.round(
+                  res.meteoData.daily.temperature_2m_min[index]
+                ),
+              };
+            });
+            setdailyWeatherData(dailyData);
 
-          let timestamp =
-            res.weatherMapData.dt * 1000 + res.weatherMapData.timezone * 1000;
-          setTimestamp(timestamp);
-        })
-        .catch((err) => console.log(err));
-    });
-    setPositionRetrieved(true);
+            let timestamp =
+              res.weatherMapData.dt * 1000 + res.weatherMapData.timezone * 1000;
+            setTimestamp(timestamp);
+          })
+          .catch((err) => {
+            setLoader(false);
+            setInfo(false);
+            console.log(err);
+          });
+      });
+      setPositionRetrieved(true);
+    }
   }
 
   const getWeatherData = () => {
@@ -143,7 +151,7 @@ const WeatherApp = () => {
           setError(false);
         }, 8000);
       });
-      document.getElementsByClassName("place-input")[0].value = "";
+    document.getElementsByClassName("place-input")[0].value = "";
   };
 
   useEffect(() => {
@@ -190,22 +198,39 @@ const WeatherApp = () => {
                 />
               </div>
               <div className={`search-container ${weatherData ? "" : "mt-4"}`}>
-                <input
-                  className="place-input"
-                  placeholder="Enter city name"
-                ></input>
-                <button
-                  onClick={getWeatherData}
-                  className="submit-btn"
-                  name="submit Button"
-                  id="submit-btn"
-                >
-                  {loader || info ? (
-                    <span className="loader"></span>
-                  ) : (
-                    <img src={searchIcon} height={"30px"} alt="search icon" />
-                  )}
-                </button>
+                {weatherData ? (
+                  <>
+                    <input
+                      className="place-input"
+                      placeholder="Enter city name"
+                    ></input>
+                    <button
+                      onClick={getWeatherData}
+                      className="submit-btn"
+                      name="submit Button"
+                      id="submit-btn"
+                    >
+                      {loader ? (
+                        <div className="submit-btn">
+                          <span className="loader"></span>
+                        </div>
+                      ) : (
+                        <img
+                          src={searchIcon}
+                          height={"30px"}
+                          alt="search icon"
+                        />
+                      )}
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <div className="place-input idle">Enter city name</div>
+                    <div className="submit-btn">
+                      <span className="loader"></span>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
             <div
@@ -277,25 +302,25 @@ const WeatherApp = () => {
                   7 days Forecast Updates:
                 </h5>
                 <div className="data-grid">
-                <div className="inner-data-grid">
-                  {dailyWeatherData.map((item, index) => (
-                    <div key={index} className="daily-data-cell">
-                      <div className="img-date-container">
-                        <FontAwesomeIcon icon={faCloud} />
-                        <p>{item.time}</p>
-                      </div>
-                      <div className="temp-container">
-                        <div>
-                          <p>Min</p>
-                          <p>{item.minTemp}°C</p>
+                  <div className="inner-data-grid">
+                    {dailyWeatherData.map((item, index) => (
+                      <div key={index} className="daily-data-cell">
+                        <div className="img-date-container">
+                          <FontAwesomeIcon icon={faCloud} />
+                          <p>{item.time}</p>
                         </div>
-                        <div>
-                          <p>Max</p>
-                          <p>{item.maxTemp}°C</p>
+                        <div className="temp-container">
+                          <div>
+                            <p>Min</p>
+                            <p>{item.minTemp}°C</p>
+                          </div>
+                          <div>
+                            <p>Max</p>
+                            <p>{item.maxTemp}°C</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
                   </div>
                 </div>
               </div>
@@ -402,10 +427,12 @@ const WeatherApp = () => {
                   name="submit Button"
                   id="submit-btn"
                 >
-                  {loader || info ? (
-                    <span className="loader"></span>
-                  ) : (
+                  {loader ? (
                     <img src={searchIcon} height={"30px"} alt="search icon" />
+                  ) : (
+                    <div className="submit-btn">
+                      <span className="loader"></span>
+                    </div>
                   )}
                 </button>
               </div>

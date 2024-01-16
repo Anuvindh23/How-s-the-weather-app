@@ -20,7 +20,7 @@ const WeatherApp = () => {
   const [positionRetrieved, setPositionRetrieved] = useState(false);
   const [timestamp, setTimestamp] = useState(null);
 
-  const device = window.matchMedia("(max-width: 600px)").matches
+  const device = window.matchMedia("(max-width: 1000px)").matches
     ? "mobile"
     : "web";
 
@@ -142,8 +142,8 @@ const WeatherApp = () => {
         setTimeout(function () {
           setError(false);
         }, 8000);
-        document.getElementsByClassName("place-input")[0].value = "";
       });
+      document.getElementsByClassName("place-input")[0].value = "";
   };
 
   useEffect(() => {
@@ -277,6 +277,7 @@ const WeatherApp = () => {
                   7 days Forecast Updates:
                 </h5>
                 <div className="data-grid">
+                <div className="inner-data-grid">
                   {dailyWeatherData.map((item, index) => (
                     <div key={index} className="daily-data-cell">
                       <div className="img-date-container">
@@ -295,6 +296,7 @@ const WeatherApp = () => {
                       </div>
                     </div>
                   ))}
+                  </div>
                 </div>
               </div>
             )}
@@ -372,8 +374,8 @@ const WeatherApp = () => {
             </>
           )}
           <div
-            className={`card-container col-11 mx-auto mt-3 ${
-              weatherData ? "data-received" : ""
+            className={`card-container mx-auto mt-3 ${
+              weatherData ? "data-received-mob" : ""
             }`}
           >
             <div

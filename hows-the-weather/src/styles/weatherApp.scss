@@ -8,7 +8,7 @@
     --card-color: #d5dbe6;
     --search-input-color: #f0ece5;
     --opacity-bg-color: rgba(0, 0, 0, 0.5);
-    --data-grid-bg-color: #8f939b;
+    --data-grid-bg-color: #f0f2f5;
     --today-weather-container-mob-color: #0d5579;
     --box-shadow-1: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
     --box-shadow-2: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
@@ -371,8 +371,8 @@ body {
     0% {}
 
     100% {
-        height: 100%;
-        width: 50%;
+        height: 100dvh;
+        width: 50dvw;
         top: 0;
         right: 0;
         transform: none;
